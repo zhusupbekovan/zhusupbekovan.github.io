@@ -5,6 +5,8 @@ This document outlines the steps taken to install Arch Linux in a virtual machin
 ## Table of Contents
 - [Arch Linux VM Installation Documentation](#arch-linux-vm-installation-documentation)
   - [Table of Contents](#table-of-contents)
+  - [Install WMware Workstation](#install-wmware-workstation)
+    - [Download WMware Workstation Installer](#download-wmware-workstation-installer)
   - [Installation Setup](#installation-setup)
   - [User Accounts](#user-accounts)
   - [Desktop Environment](#desktop-environment)
@@ -14,17 +16,26 @@ This document outlines the steps taken to install Arch Linux in a virtual machin
   - [References](#references)
 
 ---
+## Install WMware Workstation
+### Download WMware Workstation Installer
+- Go to [https://support.broadcom.com/](https://support.broadcom.com/), login/register for the portal. 
+- Go to *WMWare Cloud Foundation* 
+![Installing](./resources/img/WMware%20Foundation.png)
+- Go to *My Donwloads*, find *VMware Workstation Pro* and choose the latest version
+- 
+
 
 ## Installation Setup
+
 1. **Download Arch Linux ISO**  
   Download the latest Arch Linux ISO from [archlinux.org](https://archlinux.org/download/).
    
-2. **Set Up VM**  
+1. **Set Up VM**  
 Use your preferred hypervisor (e.g., VirtualBox, VMware) to create a VM. Allocate at least 2GB of RAM and 20GB of disk space.
-3. **Boot into Arch ISO**  
+1. **Boot into Arch ISO**  
 Boot the VM using the downloaded ISO.
 
-4. **Partition the Disk**  
+1. **Partition the Disk**  
 Use `fdisk` or `cfdisk` to create partitions:
 - `/dev/sda1` for the EFI partition (512MB).
 - `/dev/sda2` for the root partition (remaining space).
@@ -35,12 +46,12 @@ Use `fdisk` or `cfdisk` to create partitions:
   mkdir /mnt/boot
   mount /dev/sda1 /mnt/boot
   ```
-5. **Install Essential Packages**  
+1. **Install Essential Packages**  
 Install base packages:
   ```bash
   pacstrap /mnt base linuxlinux-firmware
    ```
-6. **Configure the System**  
+1. **Configure the System**  
 Generate fstab and configure hostname, timezone, and locale:
   ```bash
   genfstab -U /mnt >> /mnt/etcfstab
