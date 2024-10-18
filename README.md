@@ -20,8 +20,9 @@ This document outlines the steps taken to install Arch Linux in a virtual machin
 ### Download WMware Workstation Installer
 - Go to [https://support.broadcom.com/](https://support.broadcom.com/), login/register for the portal. 
 - Go to *WMWare Cloud Foundation* 
+  
 ![Installing](./resources/img/WMware%20Foundation.png)
-- Go to *My Donwloads*, find *VMware Workstation Pro* and choose the latest version
+- Go to *My Donwloads*, find *VMware Workstation Pro* and choose the latest version for *Personal Use*
 - 
 
 
