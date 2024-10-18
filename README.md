@@ -23,7 +23,19 @@ This document outlines the steps taken to install Arch Linux in a virtual machin
   
 ![Installing](./resources/img/WMware%20Foundation.png)
 - Go to *My Donwloads*, find *VMware Workstation Pro* and choose the latest version for *Personal Use*
-- 
+- Check the properties shown below
+
+![Installing](./resources/img/SHA2.png)
+- Complete the installation, see the screenshots below.
+
+![Installing](./resources/img/1.png)
+![Installing](./resources/img/2.png)
+![Installing](./resources/img/3.png)
+![Installing](./resources/img/4.png)
+![Installing](./resources/img/5.png)
+![Installing](./resources/img/6.png)
+![Installing](./resources/img/7.png)
+![Installing](./resources/img/8.png)
 
 
 ## Installation Setup
