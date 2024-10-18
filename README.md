@@ -41,10 +41,20 @@ This document outlines the steps taken to install Arch Linux in a virtual machin
 ## Installation Setup
 
 1. **Download Arch Linux ISO**  
-  Download the latest Arch Linux ISO from [archlinux.org](https://archlinux.org/download/).
+Download the latest Arch Linux ISO from [archlinux.org](https://archlinux.org/download/). This installation uses archlinux.doridian.net.
+  ![arch-linux](./resources/img/arch-linux.png)  
    
-1. **Set Up VM**  
-Use your preferred hypervisor (e.g., VirtualBox, VMware) to create a VM. Allocate at least 2GB of RAM and 20GB of disk space.
+2. **Set Up VM**  
+Use VMware to create a VM. Allocate at least 4GB of RAM and 20GB of disk space. See the steps below.
+![vm](./resources/img/1.1.png)  
+![vm](./resources/img/1.2.png)  
+![vm](./resources/img/1.3.png)  
+![vm](./resources/img/1.4.png)  
+![vm](./resources/img/1.5.png)  
+![vm](./resources/img/1.6.png)  
+![vm](./resources/img/1.7.png)  
+![vm](./resources/img/1.8.png)  
+
 1. **Boot into Arch ISO**  
 Boot the VM using the downloaded ISO.
 
@@ -77,7 +87,7 @@ Generate fstab and configure hostname, timezone, and locale:
    ```
 
 
-1. **Install Bootloader**  
+7. **Install Bootloader**  
 Install and configure GRUB bootloader:
   ```bash
   pacman -S grub efibootmgr
