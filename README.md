@@ -28,14 +28,14 @@ This document outlines the steps taken to install Arch Linux in a virtual machin
 ![Installing](./resources/img/SHA2.png)
 - Complete the installation, see the screenshots below.
 
-![Installing](./resources/img/1.png)
-![Installing](./resources/img/2.png)
-![Installing](./resources/img/3.png)
-![Installing](./resources/img/4.png)
-![Installing](./resources/img/5.png)
-![Installing](./resources/img/6.png)
-![Installing](./resources/img/7.png)
-![Installing](./resources/img/8.png)
+<img src="./resources/img/1.png" width="50%"  style="display:block;margin: auto;" />
+<img src="./resources/img/2.png" width="50%" style="display:block;margin: auto;" />
+<img src="./resources/img/3.png" width="50%" style="display:block;margin: auto;" />
+<img src="./resources/img/4.png" width="50%" style="display:block;margin: auto;" />
+<img src="./resources/img/5.png" width="50%" style="display:block;margin: auto;" />
+<img src="./resources/img/6.png" width="50%" style="display:block;margin: auto;" />
+<img src="./resources/img/7.png" width="50%" style="display:block;margin: auto;" />
+<img src="./resources/img/8.png" width="50%" style="display:block;margin: auto;" />
 
 
 ## Installation Setup
@@ -46,35 +46,38 @@ Download the latest Arch Linux ISO from [archlinux.org](https://archlinux.org/do
    
 2. **Set Up VM**  
 Use VMware to create a VM. Allocate at least 4GB of RAM and 20GB of disk space. See the steps below.
-![vm](./resources/img/1.1.png)  
-![vm](./resources/img/1.2.png)  
-![vm](./resources/img/1.3.png)  
-![vm](./resources/img/1.4.png)  
-![vm](./resources/img/1.5.png)  
-![vm](./resources/img/1.6.png)  
-![vm](./resources/img/1.7.png)  
-![vm](./resources/img/1.8.png)  
+<img src="./resources/img/1.1.png" width="75%"  style="display:block;margin: auto;" />
+<img src="./resources/img/1.2.png" width="50%" style="display:block;margin: auto;" />
+<img src="./resources/img/1.3.png" width="50%" style="display:block;margin: auto;" />
+<img src="./resources/img/1.4.png" width="50%" style="display:block;margin: auto;" />
+<img src="./resources/img/1.6.png" width="50%" style="display:block;margin: auto;" />
+<img src="./resources/img/1.5.png" width="50%" style="display:block;margin: auto;" />
+<img src="./resources/img/1.7.png" width="50%" style="display:block;margin: auto;" />
+<img src="./resources/img/1.8.png" width="50%" style="display:block;margin: auto;" />
 
-1. **Boot into Arch ISO**  
+3. **Boot into Arch ISO**  
 Boot the VM using the downloaded ISO.
+<img src="./resources/img/2.1.png" width="75%" style="display:block;margin: auto;" />
+<img src="./resources/img/2.2.png" width="75%" style="display:block;margin: auto;" />
+<img src="./resources/img/2.3.png" width="75%" style="display:block;margin: auto;" />
 
-1. **Partition the Disk**  
+4. **Partition the Disk**  
 Use `fdisk` or `cfdisk` to create partitions:
 - `/dev/sda1` for the EFI partition (512MB).
 - `/dev/sda2` for the root partition (remaining space).
-  ```bash
+```bash
   mkfs.fat -F32 /dev/sda1
   mkfs.ext4 /dev/sda2
   mount /dev/sda2 /mnt
   mkdir /mnt/boot
   mount /dev/sda1 /mnt/boot
-  ```
-1. **Install Essential Packages**  
+```
+5. **Install Essential Packages**  
 Install base packages:
   ```bash
   pacstrap /mnt base linuxlinux-firmware
    ```
-1. **Configure the System**  
+6. **Configure the System**  
 Generate fstab and configure hostname, timezone, and locale:
   ```bash
   genfstab -U /mnt >> /mnt/etcfstab
@@ -94,6 +97,8 @@ Install and configure GRUB bootloader:
   grub-install--target=x86_64-efi   --efi-directory=/boot  --bootloader-id=GRUB
   grub-mkconfig -o /boot/grubgrub.   cfg
    ```
+
+
 
 ## User Accounts
 1. Create User Accounts
