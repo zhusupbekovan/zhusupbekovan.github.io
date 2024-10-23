@@ -7,7 +7,7 @@ This document outlines the steps taken to install Arch Linux in a virtual machin
   - [Table of Contents](#table-of-contents)
   - [Install WMware Workstation](#install-wmware-workstation)
     - [Download WMware Workstation Installer](#download-wmware-workstation-installer)
-  - [Installation Setup](#installation-setup)
+    - [Installation Setup](#installation-setup)
   - [User Accounts](#user-accounts)
   - [Desktop Environment](#desktop-environment)
   - [Customizations](#customizations)
@@ -38,7 +38,7 @@ This document outlines the steps taken to install Arch Linux in a virtual machin
 <img src="./resources/img/8.png" width="50%" style="display:block;margin: auto;" />
 
 
-## Installation Setup
+### Installation Setup
 
 1. **Download Arch Linux ISO**  
 Download the latest Arch Linux ISO from [archlinux.org](https://archlinux.org/download/). This installation uses archlinux.doridian.net.
@@ -63,8 +63,37 @@ Boot the VM using the downloaded ISO.
 
 4. **Partition the Disk**  
 Use `fdisk` or `cfdisk` to create partitions:
-- `/dev/sda1` for the EFI partition (512MB).
-- `/dev/sda2` for the root partition (remaining space).
+- `/dev/sda1` - 1G - for /boot
+- `/dev/sda2` - 5G - for root
+- `/dev/sda3` - 1G - for swap
+
+First, run the below command to find out the device identifier:
+```bash
+  fdisk -l
+```
+
+<img src="./resources/img/3.1.png" width="75%" style="display:block;margin: auto;" />
+
+Then, with the device identifier, run the below command to start partitioning your disk. Make sure to change `/dev/sda` as per your system.
+```bash
+  cfdisk /dev/sda
+```
+<img src="./resources/img/3.2.png" width="75%" style="display:block;margin: auto;" />
+
+Select `label type = dos` in the next prompt.
+
+Select the free space and choose option NEW from the bottom. 
+
+<img src="./resources/img/3.3.png" width="75%" style="display:block;margin: auto;" />
+
+Run the below command to check before you proceed to see in three partitions are listed.
+
+```bash
+  fdisk -l
+```
+<img src="./resources/img/3.4.png" width="75%" style="display:block;margin: auto;" />
+
+Run the following commands in sequence to format and create an ext4 file system in the newly created partition above. Make sure you change the /dev/sda1 and /dev/sda2 as per your need.
 ```bash
   mkfs.fat -F32 /dev/sda1
   mkfs.ext4 /dev/sda2
@@ -72,32 +101,109 @@ Use `fdisk` or `cfdisk` to create partitions:
   mkdir /mnt/boot
   mount /dev/sda1 /mnt/boot
 ```
+
+After completion, mount the system and create the necessary directories.
+
+```bash
+  mount /dev/sda2 /mnt
+  mkdir /mnt/boot /mnt/var /mnt/home
+  mount /dev/sda1 /mnt/boot
+```
+<img src="./resources/img/3.5.png" width="75%" style="display:block;margin: auto;" />
+
 5. **Install Essential Packages**  
 Install base packages:
   ```bash
-  pacstrap /mnt base linuxlinux-firmware
+  pacman -Syy
+  pacstrap /mnt base base-devel linux linux-firmware nano dhcpcd net-tools grub
    ```
 6. **Configure the System**  
 Generate fstab and configure hostname, timezone, and locale:
   ```bash
   genfstab -U /mnt >> /mnt/etcfstab
   arch-chroot /mnt
-  ln -sf /usr/share/zoneinfoRegion/    City /etc/localtime
+  ln -sf /usr/share/zoneinfoRegion/Chicago /etc/localtime
   hwclock --systohc
   echo "en_US.UTF-8 UTF-8" > etc/    locale.gen
   locale-gen
-  echo "myhostname" > /etchostname
+  echo "nuraiym" > /etchostname
    ```
 
+  The next step is to set up the root user password, create an admin user, and add the user to the sudoers file.
 
-7. **Install Bootloader**  
-Install and configure GRUB bootloader:
+  Follow the below commands in sequence. Make sure to change the user name from debugpoint to something else as per your need.
   ```bash
-  pacman -S grub efibootmgr
-  grub-install--target=x86_64-efi   --efi-directory=/boot  --bootloader-id=GRUB
-  grub-mkconfig -o /boot/grubgrub.   cfg
+  passwd root
+  useradd -m -g users -G wheel -s /bin/bash nuraiym
+  passwd nuraiym
    ```
 
+  Open the sudoers file and add the below lines.
+
+  ```bash
+  nano /etc/sudoers
+   ```
+
+  Add below lines. As you already created the root user, the entry should be there.
+  ```bash
+  root ALL=(ALL) ALL
+  nuraiym ALL=(ALL) ALL
+   ```
+7. **Install Bootloader**  
+Install grub, setup the initial ramdisk environment, unmount the system using the below commands in sequence.
+  ```bash
+  grub-install /dev/sda
+  grub-mkconfig -o /boot/grub/grub.cfg
+  mkinitcpio -p linux
+   ```
+  Then reboot the system.
+  ```bash
+  umount /mnt/boot
+  umount /mnt
+  reboot
+   ```
+
+
+8. **Install LXQt Desktop**   
+After reboot, choose Arch Linux from grub. In the Arch Linux prompt, start running the following commands in sequence. These commands install the Xorg server, display manager, LXQt desktop components, controller packages, and additional applications.
+
+  For all the commands, use the default, i.e. press enter when asked.
+
+- Install Xorg
+```bash
+sudo pacman -S --needed xorg
+```
+- Install display manager, lxqt desktop. Approx install size is 100 MB.
+```bash
+sudo pacman -S --needed lxqt xdg-utils ttf-freefont sddm
+```
+- Install additional components (approx 80 MB)
+```bash
+sudo pacman -S --needed libpulse libstatgrab libsysstat lm_sensors network-manager-applet oxygen-icons pavucontrol-qt
+```
+- Install applications
+```bash
+sudo pacman -S --needed firefox vlc filezilla leafpad xscreensaver archlinux-wallpaper
+```
+- Now it’s time to enable the display manager and network manager as a service. So that, the next time you log on, they can run automatically by systemd.
+```bash
+systemctl enable sddm
+systemctl enable NetworkManager
+```
+- Reboot the system using the reboot command.
+```bash
+reboot
+```
+
+You should see a nice login prompt on the LXQt desktop if all goes well.
+
+And you can now log in using the user id and password which you just created. A Nice and superfast LXQt desktop will greet you after a successful login.
+
+<img src="./resources/img/3.6.png" style="display:block;margin: auto;" />
+
+
+
+**Note:** If some of the commands are not working, you may need to put sudo before running it.
 
 
 ## User Accounts
