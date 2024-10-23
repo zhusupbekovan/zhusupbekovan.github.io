@@ -12,8 +12,8 @@ This document outlines the steps taken to install Arch Linux in a virtual machin
   - [Desktop Environment](#desktop-environment)
   - [Install different shells zsh or fish.](#install-different-shells-zsh-or-fish)
   - [Install and Configure SSH](#install-and-configure-ssh)
-  - [Enable Terminal Colors](#enable-terminal-colors)
   - [Set Up Aliases](#set-up-aliases)
+  - [Enable Terminal Colors](#enable-terminal-colors)
   - [References](#references)
 
 ---
@@ -214,7 +214,7 @@ Use `fdisk` or `cfdisk` to create partitions:
    useradd -m -G users -s /bin/  bash  justin
    useradd -m -G users -s /bin/  bash  codi
    ```
-    User account for *nuraiym* was created before.
+    User account for *nuraiym* was created in previous section.
 2. Set Passwords
 
     Assign passwords to users and enforce a password change on the first login:
@@ -293,19 +293,65 @@ Use `fdisk` or `cfdisk` to create partitions:
       <img src="./resources/img/ssh1.png" style="display:block;margin: auto;" />
       <img src="./resources/img/ssh2.png" style="display:block;margin: auto;" />
       
-## Enable Terminal Colors
-Enable color coding in the terminal by editing .zshrc or `.bashrc`:
-  ```bash 
-  alias ls='ls --color=auto'
-  ```
-
 ## Set Up Aliases
-Add custom aliases to .zshrc or `.bashrc`:
-  ```bash 
-alias update='sudo pacman -Syu'
-alias cls='clear'
-alias ..='cd ..'
-  ```
+Add custom aliases to `.zshrc` or `.bashrc`:
+  1. **Edit shell configuration file:** 
+     - For Bash, edit `.bashrc` :
+        ```bash 
+        sudo nano ~/.bashrc
+        ``` 
+     - For Zsh, edit `.zshrc`:
+       ```bash 
+       sudo nano ~/.zshrc
+       ``` 
+  2. **Add aliases:**
+      ```bash 
+      alias update='sudo pacman -Syu'   # Update the system
+      alias cls='clear'                 # Clear the terminal
+      alias ..='cd ..'                  # Go up one directory
+      alias ll='ls -lh'                 # List files with details
+      ``` 
+  3. **Reload the configuration file to apply the changes:**
+     - For Bash:
+        ```bash 
+        sudo source ~/.bashrc
+        ``` 
+     - For Zsh:
+       ```bash 
+       source ~/.zshrc
+       ```    
+
+## Enable Terminal Colors
+To enable color coding in the terminal like the Arch ISO installation process, follow these steps:
+   1. **Bash**
+        - Edit the `.bashrc` file to enable color support
+          ```bash 
+          sudo nano ~/.bashrc
+          ```
+        - Add or uncomment the following lines to enable colored output (enable color for ls and grep)::
+          ```bash 
+          alias ls='ls --color=auto'
+          alias grep='grep --color=auto'
+          ```
+        - Save and close the file, then reload `.bashrc`
+          ```bash 
+          sudo source ~/.bashrc
+          ```
+   2. **Zsh**
+        - Edit the `.zshrc` file:
+          ```bash 
+          sudo nano ~/.zshrc
+          ```
+        - Add the following lines to enable colored output (enable color for ls and grep):
+          ```bash 
+          alias ls='ls --color=auto'
+          alias grep='grep --color=auto'
+          ```
+        - Save and close the file, then reload `.zshrc`
+          ```bash 
+          sudo source ~/.zshrc
+          ```
+
 
 ## References
 - [Arch Linux Installation Wiki](https://wiki.archlinux.org/title/Installation_guide)
