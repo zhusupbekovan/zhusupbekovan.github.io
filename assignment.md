@@ -1,24 +1,8 @@
-Assignment Description
-Now that you have a solid foundation of Linux, it's time to create your own Linux VM instead of relying on pre-built distributions. Why would you do such a thing? Well... there are lots (hundreds) of different Linux distros for a reason - different people want different things. Being able to tailor your Linux OS to exactly what you want in there, and nothing else, is a feature that neither Windows or macOS provide. More importantly, for this course, creating your own Linux VM will provide you a tangible artifact that proves you can use the baseline Linux skills you have learned to do something potentially useful. This assignment will greatly enhance your understanding of how Linux works at a deeper level - a great asset to have if things break!
+1) Add color coding to the terminal (like you see in the archiso during installation).
 
-Installation
-In this assignment, you will create your own Arch Linux VM byt following the Arch Linux Installation Wiki.
+2) Set the system to boot into the GUI desktop environment.
 
-You will also make the following modifications:
-
-1) The Arch Linux installation wiki ends without a GUI-based desktop environment (DE). You will choose and install a compatible DE. At very least, you should install LXQT, which is a very light-weight desktop that uses less hard drive space. BUT... this is not a requirement. Choose a DE that you like.
-
-2) Create a user account for yourself, justin, and codi with sudo permissions. The passwords for the instructor users shall be "GraceHopper1906" and be set to be changed after login.
-
-3) Install a different shell other than bash, such as zsh or fish.
-
-4) Install ssh.
-
-5) Add color coding to the terminal (like you see in the archiso during installation).
-
-6) Set the system to boot into the GUI desktop environment.
-
-7) Add a few aliases to your shell configuration file (surch as .zshrc for zsh or .bashrc for bash). Need some ideas for good Linux aliases? Check here.
+3) Add a few aliases to your shell configuration file (surch as .zshrc for zsh or .bashrc for bash). Need some ideas for good Linux aliases? Check here.
 
 
 
