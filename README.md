@@ -44,7 +44,7 @@ This document outlines the steps taken to install Arch Linux in a virtual machin
 1. **Download Arch Linux ISO**  
 Download the latest Arch Linux ISO from [archlinux.org](https://archlinux.org/download/). This installation uses archlinux.doridian.net.
   ![arch-linux](./resources/img/arch-linux.png)  
-   
+**Description:** The ISO image contains the Arch Linux operating system files necessary for installation. Choosing a reliable source ensures the integrity and authenticity of the download.   
 2. **Set Up VM**  
 Use VMware to create a VM. Allocate at least 4GB of RAM and 20GB of disk space. See the steps below.
 <img src="./resources/img/1.1.png"   style="display:block;margin: auto;" />
@@ -55,6 +55,8 @@ Use VMware to create a VM. Allocate at least 4GB of RAM and 20GB of disk space. 
 <img src="./resources/img/1.5.png" width="50%" style="display:block;margin: auto;" />
 <img src="./resources/img/1.7.png" width="50%" style="display:block;margin: auto;" />
 <img src="./resources/img/1.8.png" width="50%" style="display:block;margin: auto;" />
+
+**Description:** Setting up a virtual machine (VM) allows you to run Arch Linux in an isolated environment. Sufficient RAM and disk space are essential for a smooth installation and performance of the OS.
 
 3. **Boot into Arch ISO**  
 Boot the VM using the downloaded ISO.
@@ -73,17 +75,24 @@ Use `fdisk` or `cfdisk` to create partitions:
       fdisk -l
     ```
 
+  **Description:** `fdisk -l` lists all disks and their partitions, allowing you to identify your target disk for partitioning.
+
   <img src="./resources/img/3.1.png"  style="display:block;margin: auto;" />
 
   Then, with the device identifier, run the below command to start partitioning your disk. Make sure to change `/dev/sda` as per your system.
   ```bash
     cfdisk /dev/sda
   ```
+
+  **Description:** `cfdisk` is a command-line partitioning tool. This command opens the partitioning interface for the specified disk.
+
   <img src="./resources/img/3.2.png"  style="display:block;margin: auto;" />
 
   Select `label type = dos` in the next prompt.
   
   Select the free space and choose option NEW from the bottom. 
+
+  **Description:** Creating a new partition allows you to allocate space for the system, including boot, root, and swap partitions.
 
   <img src="./resources/img/3.3.png" style="display:block;margin: auto;" />
 
@@ -102,6 +111,13 @@ Use `fdisk` or `cfdisk` to create partitions:
     mkdir /mnt/boot
     mount /dev/sda1 /mnt/boot
   ```
+  **Description:**
+  - `mkfs.fat -F32 /dev/sda1`: Formats the `/boot` partition as FAT32, necessary for boot loaders.
+  - `mkfs.ext4 /dev/sda2`: Formats the root partition as ext4, a widely used Linux filesystem.
+  - `mount /dev/sda2 /mnt`: Mounts the root partition to `/mnt`, the temporary root directory during installation.
+  - `mkdir /mnt/boot`: Creates a directory for the boot partition.
+  - `mount /dev/sda1 /mnt/boot`: Mounts the boot partition, allowing the boot loader to store necessary files.
+
 
   After completion, mount the system and create the necessary directories.
 
@@ -110,6 +126,9 @@ Use `fdisk` or `cfdisk` to create partitions:
     mkdir /mnt/boot /mnt/var /mnt/home
     mount /dev/sda1 /mnt/boot
   ```
+
+  **Description:** This sets up the filesystem hierarchy by mounting partitions to specific directories for proper access during and after installation.
+
   <img src="./resources/img/3.5.png"  style="display:block;margin: auto;" />
 
 5. **Install Essential Packages**  
@@ -118,6 +137,19 @@ Use `fdisk` or `cfdisk` to create partitions:
     pacman -Syy
     pacstrap /mnt base base-devel linux linux-firmware nano dhcpcd net-tools grub
     ```
+    
+    **Description:**
+    - `pacman -Syy:` Updates the package database, ensuring the latest package information is used.
+    - `pacstrap /mnt base base-devel linux linux-firmware nano dhcpcd net-tools grub`: Installs essential packages to the mounted filesystem:
+    - base: Core system packages.
+    - base-devel: Development tools.
+    - linux: The Linux kernel.
+    - linux-firmware: Firmware for hardware.
+    - nano: A text editor for command-line use.
+     - dhcpcd: DHCP client for automatic network configuration.
+     - net-tools: Networking utilities.
+     - grub: The bootloader to manage booting.
+
 6. **Configure the System**  
   Generate fstab and configure hostname, timezone, and locale:
     ```bash
@@ -129,6 +161,15 @@ Use `fdisk` or `cfdisk` to create partitions:
     locale-gen
     echo "nuraiym" > /etchostname
     ```
+
+    **Description:**
+    - `genfstab -U /mnt >> /mnt/etc/fstab`: Generates the filesystem table, necessary for automatic mounting of partitions on boot
+    - `arch-chroot /mnt`: Changes root into the newly installed system, allowing further configuration.
+    - `ln -sf /usr/share/zoneinfo/Region/Chicago /etc/localtime`: Sets the timezone, which is important for accurate timekeeping.
+    - `hwclock --systohc`: Syncs the hardware clock to the system clock.
+    - `echo "en_US.UTF-8 UTF-8" > /etc/locale.gen`: Prepares the locale configuration for English (US).
+    - `locale-gen`: Generates the locale data.
+    - `echo "nuraiym" > /etc/hostname`: Sets the system's hostname, which identifies the machine on a network.
 
     The next step is to set up the root user password, create an admin user, and add the user to the sudoers file.
 
@@ -157,24 +198,28 @@ Use `fdisk` or `cfdisk` to create partitions:
     grub-mkconfig -o /boot/grub/grub.cfg
     mkinitcpio -p linux
     ```
+
+    **Description:**
+    - `grub-install /dev/sda`: Installs the GRUB bootloader to the specified disk, allowing the system to boot
+    - `grub-mkconfig -o /boot/grub/grub.cfg`: Generates the GRUB configuration file, which defines boot options
+    - `mkinitcpio -p linux`: Creates the initial ramdisk, which contains the necessary drivers and modules for booting.
+
     Then reboot the system.
     ```bash
     umount /mnt/boot
     umount /mnt
     reboot
     ```
-
-
 8. **Install LXQt Desktop**   
   After reboot, choose Arch Linux from grub. In the Arch Linux prompt, start running the following commands in sequence. These commands install the Xorg server, display manager, LXQt desktop components, controller packages, and additional applications.
 
     For all the commands, use the default, i.e. press enter when asked.
 
-   - Install Xorg
+   - Installs the Xorg server, which provides the graphical interface for the desktop environment.
    ```bash
    sudo pacman -S --needed xorg
    ```
-   - Install display manager, lxqt desktop. Approx install size is 100 MB.
+   - Install display manager, lxqt desktop. Approx install size is 100 MB. Installs the LXQt desktop environment and dependencies, including the Simple Desktop Display Manager (SDDM).
    ```bash
    sudo pacman -S --needed lxqt xdg-utils ttf-freefont sddm
    ```
@@ -196,11 +241,9 @@ Use `fdisk` or `cfdisk` to create partitions:
    reboot
    ```
 
-    You should see a nice login prompt on the LXQt desktop if all goes well.
+  Now you can log in using the user id and password which you just created.
 
-    And you can now log in using the user id and password which you just created. A Nice and superfast LXQt desktop will greet you after a successful login.
-
-    <img src="./resources/img/3.6.png" style="display:block;margin: auto;" />
+  <img src="./resources/img/3.6.png" style="display:block;margin: auto;" />
 
 
 **Note:** If some of the commands are not working, you may need to put sudo before running it.
@@ -226,8 +269,6 @@ Use `fdisk` or `cfdisk` to create partitions:
     ```
 
     <img src="./resources/img/users1.png" style="display:block;margin: auto;" />
-
-
 3. Configure sudo
 
     Edit the sudoers file to grant sudo permissions:
@@ -319,7 +360,13 @@ Add custom aliases to `.zshrc` or `.bashrc`:
      - For Zsh:
        ```bash 
        source ~/.zshrc
-       ```    
+       ```  
+  4. **Add aliases from web page if the internet connection established and curl is installed**      
+     - For Bash: get the raw - data from github page and append it to `.bashrc`
+        ```bash 
+        sudo wget -qO- https://raw.githubusercontent.com/username/repository/branch/filename >> ~/.bashrc
+
+        ``` 
 
 ## Enable Terminal Colors
 To enable color coding in the terminal like the Arch ISO installation process, follow these steps:
@@ -352,8 +399,13 @@ To enable color coding in the terminal like the Arch ISO installation process, f
           sudo source ~/.zshrc
           ```
 
+<img src="./resources/img/alias.png" alt="Alias Image" style="display:block;margin: auto;" />
+<p>.bashrc-File</p>
+
+<img src="./resources/img/color.png" alt="Alias Image" style="display:block;margin: auto;" />
+<p>Terminal after changing the colors and setting the aliases</p>
 
 ## References
 - [Arch Linux Installation Wiki](https://wiki.archlinux.org/title/Installation_guide)
 - [Arch User Repository (AUR)](https://aur.archlinux.org/)
-- [ZSH Documentation](https://zsh.sourceforge.io/Doc/Release/)
+- [ChatGPT](https://chatgpt.com/)
