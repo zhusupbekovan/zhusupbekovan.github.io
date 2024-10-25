@@ -14,6 +14,9 @@ This document outlines the steps taken to install Arch Linux in a virtual machin
   - [Install and Configure SSH](#install-and-configure-ssh)
   - [Set Up Aliases](#set-up-aliases)
   - [Enable Terminal Colors](#enable-terminal-colors)
+  - [Troubleshooting](#troubleshooting)
+    - [Solution: Edit `/etc/resolv.conf`](#solution-edit-etcresolvconf)
+    - [Steps to Edit `/etc/resolv.conf`:](#steps-to-edit-etcresolvconf)
   - [References](#references)
 
 ---
@@ -326,13 +329,13 @@ Use `fdisk` or `cfdisk` to create partitions:
 
 ## Install and Configure SSH
   Install SSH and start it at boot
-    ```bash 
+  ```bash 
   pacman -S openssh
   systemctl enable sshd
   systemctl start sshd
-    ```
-      <img src="./resources/img/ssh1.png" style="display:block;margin: auto;" />
-      <img src="./resources/img/ssh2.png" style="display:block;margin: auto;" />
+  ```
+  <img src="./resources/img/ssh1.png" style="display:block;margin: auto;" />
+  <img src="./resources/img/ssh2.png" style="display:block;margin: auto;" />
       
 ## Set Up Aliases
 Add custom aliases to `.zshrc` or `.bashrc`:
@@ -405,6 +408,39 @@ To enable color coding in the terminal like the Arch ISO installation process, f
 <img src="./resources/img/color.png" alt="Alias Image" style="display:block;margin: auto;" />
 <p>Terminal after changing the colors and setting the aliases</p>
 
+
+## Troubleshooting 
+When running the pacman -Syy command, I got errors "failed retrieving file 'core.db' from mirrors.lty.org". This occured due to issues with the configured mirrors, which are the servers from which pacman downloads packages and updates. If the mirrors are outdated, unreachable, or experiencing downtime, pacman won't be able to fetch the necessary database files, leading to synchronization failures.
+<img src="./resources/img/problems.png" alt="Problems" style="display:block;margin: auto;" />
+  ### Solution: Edit `/etc/resolv.conf`
+  To address potential DNS resolution failures, you can edit the `/etc/resolv.conf` file to ensure that your system can resolve domain names properly.
+  ### Steps to Edit `/etc/resolv.conf`:
+
+1. **Open the Terminal.**
+2. **Edit the `resolv.conf` file** using a text editor, such as `nano`:
+
+   ```bash
+   sudo nano /etc/resolv.conf
+   ```
+3. **Add or update the following**  to use Google’s DNS servers:  
+   ```bash
+   nameserver 8.8.8.8
+   nameserver 8.8.4.4
+   ```
+   This configuration directs the system to use Google's public DNS servers, which are generally reliable and fast.
+4. Save the file and restart  network service:
+      ```bash
+      sudo systemctl restart NetworkManager
+      ```
+5. Reboot the server
+      ```bash
+      reboot
+      ```
+6. Test 
+      ```bash
+      ping -c 4 google.com
+      sudo pacman -Syy
+      ```
 ## References
 - [Arch Linux Installation Wiki](https://wiki.archlinux.org/title/Installation_guide)
 - [Arch User Repository (AUR)](https://aur.archlinux.org/)
