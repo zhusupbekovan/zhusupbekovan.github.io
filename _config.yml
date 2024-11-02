@@ -9,6 +9,9 @@ kramdown:
   math_engine: mathjax
   syntax_highlighter: rouge
   
-theme: minima # Built-in Jekyll theme name
-title: "My SysAdmin Project's Documentation"
+markdown: kramdown
+theme: minima  # or any other Jekyll theme you're using
+custom_css: /assets/css/style.css
+
+title: "My SysAdmin Project's Documentations"
 description: "A detailed overview of my Arch Linux/Docker projects"

@@ -1,0 +1,47 @@
+/* assets/css/style.css */
+
+/* Change the body font and background color */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+/* Style the header */
+header {
+    background-color: #333;
+    color: #f4f4f9;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Style links */
+a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #ff6600;
+}
+
+/* Style headings */
+h1, h2, h3, h4, h5, h6 {
+    color: #333;
+    font-weight: bold;
+}
+
+/* Add a custom border to images */
+img {
+    border: 5px solid #333;
+    border-radius: 10px;
+}
+
+/* Customize the footer */
+footer {
+    background-color: #333;
+    color: #f4f4f9;
+    padding: 10px;
+    text-align: center;
+    font-size: 0.9em;
+}
