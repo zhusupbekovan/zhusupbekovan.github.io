@@ -1,46 +1,91 @@
 /* assets/css/style.css */
 
-/* General background and text color */
+/* Background and Text Colors */
 body {
-    background-color: #121212;
-    color: #e0e0e0;
+    background-color: #121212; /* Dark background */
+    color: #e0e0e0; /* Light text color */
     font-family: Arial, sans-serif;
+    line-height: 1.6;
 }
 
-/* Header styling */
+/* Header Styling */
 header {
-    background-color: #1f1f1f;
-    color: #ffffff;
+    background-color: #1f1f1f; /* Slightly lighter than the body */
+    color: #f4f4f4;
     padding: 20px;
     text-align: center;
 }
 
-/* Link styling */
+/* Link Styling */
 a {
-    color: #bb86fc;
+    color: #1e90ff; /* Light blue for links */
     text-decoration: none;
 }
 
 a:hover {
-    color: #03dac5;
+    color: #ff6347; /* Soft red for hover effect */
+    text-decoration: underline;
 }
 
-/* Heading colors */
+/* Headings */
 h1, h2, h3, h4, h5, h6 {
-    color: #ffffff;
+    color: #f4f4f4; /* Light color for headings */
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
 
-/* Image border styling */
+/* Code and Preformatted Text */
+pre, code {
+    background-color: #333333; /* Dark grey for code blocks */
+    color: #f4f4f4;
+    padding: 5px;
+    border-radius: 5px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* Image Border */
 img {
-    border: 5px solid #1f1f1f;
+    border: 5px solid #444444; /* Dark grey border */
     border-radius: 10px;
 }
 
-/* Footer styling */
+/* List Styling */
+ul, ol {
+    margin-left: 20px;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #444444;
+}
+
+th {
+    background-color: #1f1f1f;
+    color: #f4f4f4;
+}
+
+td {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+}
+
+/* Footer Styling */
 footer {
     background-color: #1f1f1f;
-    color: #e0e0e0;
+    color: #aaaaaa;
     padding: 10px;
     text-align: center;
     font-size: 0.9em;
+    margin-top: 40px;
 }
