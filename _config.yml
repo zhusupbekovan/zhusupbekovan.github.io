@@ -10,7 +10,7 @@ kramdown:
   syntax_highlighter: rouge
   
 markdown: kramdown
-theme: minima  # or any other Jekyll theme you're using
+remote_theme: pmarsceill/just-the-docs  # or any other Jekyll theme you're using
 custom_css: /resources/css/style.css
 
 title: "My SysAdmin Project's Documentations"
