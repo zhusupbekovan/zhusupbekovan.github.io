@@ -1,4 +1,2 @@
-# Docker
-
 ---
 ## Table of Contents

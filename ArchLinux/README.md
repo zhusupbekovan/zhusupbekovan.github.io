@@ -1,5 +1,5 @@
 # Arch Linux VM Installation Documentation
-
+---
 This document outlines the steps taken to install Arch Linux in a virtual machine, along with customizations and troubleshooting encountered during the process.
 
 ## Table of Contents
