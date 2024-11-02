@@ -11,7 +11,7 @@ kramdown:
   
 markdown: kramdown
 theme: minima  # or any other Jekyll theme you're using
-custom_css: /assets/css/style.css
+custom_css: /resources/css/style.css
 
 title: "My SysAdmin Project's Documentations"
 description: "A detailed overview of my Arch Linux/Docker projects"
