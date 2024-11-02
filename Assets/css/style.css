@@ -1,46 +1,45 @@
 /* assets/css/style.css */
 
-/* Change the body font and background color */
+/* General background and text color */
 body {
+    background-color: #121212;
+    color: #e0e0e0;
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
 }
 
-/* Style the header */
+/* Header styling */
 header {
-    background-color: #333;
-    color: #f4f4f9;
+    background-color: #1f1f1f;
+    color: #ffffff;
     padding: 20px;
     text-align: center;
 }
 
-/* Style links */
+/* Link styling */
 a {
-    color: #0066cc;
+    color: #bb86fc;
     text-decoration: none;
 }
 
 a:hover {
-    color: #ff6600;
+    color: #03dac5;
 }
 
-/* Style headings */
+/* Heading colors */
 h1, h2, h3, h4, h5, h6 {
-    color: #333;
-    font-weight: bold;
+    color: #ffffff;
 }
 
-/* Add a custom border to images */
+/* Image border styling */
 img {
-    border: 5px solid #333;
+    border: 5px solid #1f1f1f;
     border-radius: 10px;
 }
 
-/* Customize the footer */
+/* Footer styling */
 footer {
-    background-color: #333;
-    color: #f4f4f9;
+    background-color: #1f1f1f;
+    color: #e0e0e0;
     padding: 10px;
     text-align: center;
     font-size: 0.9em;
