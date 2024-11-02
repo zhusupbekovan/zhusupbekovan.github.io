@@ -8,3 +8,7 @@ gist:
 kramdown:
   math_engine: mathjax
   syntax_highlighter: rouge
+  
+theme: minima # Built-in Jekyll theme name
+title: "My SysAdmin Project's Documentation"
+description: "A detailed overview of my Arch Linux/Docker projects"
