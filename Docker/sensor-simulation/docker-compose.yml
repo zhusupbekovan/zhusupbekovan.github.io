@@ -1,0 +1,93 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: sensor_data
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_AUTH_DISABLE_LOGIN_FORM: "true"  # Disable the login form to enforce Keycloak login
+      GF_AUTH_GENERIC_OAUTH_ENABLED: "true" # Enable OAuth2
+      GF_AUTH_GENERIC_OAUTH_NAME: "Keycloak"
+      GF_AUTH_GENERIC_OAUTH_ALLOW_SIGN_UP: "true"
+      GF_AUTH_GENERIC_OAUTH_CLIENT_ID: "grafana"
+      GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: "your-client-secret" # Update with your client secret
+      GF_AUTH_GENERIC_OAUTH_SCOPES: "openid"
+      GF_AUTH_GENERIC_OAUTH_AUTH_URL: "https://nuraiym.com/keycloak/auth/realms/your-realm/protocol/openid-connect/auth"
+      GF_AUTH_GENERIC_OAUTH_TOKEN_URL: "https://nuraiym.com/keycloak/auth/realms/your-realm/protocol/openid-connect/token"
+      GF_AUTH_GENERIC_OAUTH_API_URL: "https://nuraiym.com/keycloak/auth/realms/your-realm/protocol/openid-connect/userinfo"
+    depends_on:
+      - postgres
+      - keycloak
+    networks:
+      - backend
+
+  python:
+    build:
+      context: ./python
+    container_name: sensor_generator
+    environment:
+      DB_HOST: postgres
+      DB_NAME: sensor_data
+      DB_USER: user
+      DB_PASSWORD: password
+    depends_on:
+      - postgres
+    networks:
+      - backend
+
+  keycloak:
+    image: keycloak/keycloak:latest
+    container_name: keycloak
+    environment:
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin # Set the admin username
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin # Set the admin password
+    ports:
+      - "8080:8080"
+    command: start-dev  # Ensure Keycloak starts in dev mode
+    networks:
+      - backend
+
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    environment:
+      DEFAULT_HOST: "nuraiym.com"
+      VIRTUAL_HOST: "nuraiym.com"
+      VIRTUAL_PORT: 443
+      VIRTUAL_PROTO: "https"
+      VIRTUAL_SSL: "true"
+    ports:
+      - "80:80"
+      - "443:443"  # Expose HTTPS port
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf  # Optional: custom nginx.conf file
+      - ./index.html:/usr/share/nginx/html/index.html  # Ensure this path is correct
+    depends_on:
+      - grafana
+      - keycloak
+    networks:
+      - backend  # Ensure this matches your network configuration
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  postgres_data:
