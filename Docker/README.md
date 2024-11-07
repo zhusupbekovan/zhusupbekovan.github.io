@@ -35,32 +35,46 @@ Note: do not run the result of this assignment in a production environment witho
     - [Functional requirenments](#functional-requirenments)
     - [Additional features](#additional-features)
 - [Installing docker and docker-compose](#installing-docker-and-docker-compose)
-- [Setup Docker-Compore File](#setup-docker-compore-file)
+- [Setup](#setup)
     - [Folder structure](#folder-structure)
+    - [Setup Docker-Compore File](#setup-docker-compore-file)
     - [Setup Dockerfiel for python script](#setup-dockerfiel-for-python-script)
     - [Setup HTML-Page](#setup-html-page)
     - [Additional Configurations](#additional-configurations)
 - [Running deployment](#running-deployment)
     - [Scenario 1](#scenario-1)
-    - [Scenario 2](#scenario-2)
-    - [Scenario 3](#scenario-3)
-    - [Scenario 4](#scenario-4)
 - [Troubleshooting](#troubleshooting)
 - [References](#references)
 
 ## System Prerequisites
+This project is deployed in Ubuntu 22.04 using WSL in Windows (see [How to install Linux on Windows using WSL](https://learn.microsoft.com/en-us/windows/wsl/install)). Make sure everything is installed before you start building the project. 
+
 ## Deployment description
 ### Functional requirenments
 ### Additional features
+
 ## Installing docker and docker-compose
-## Setup Docker-Compore File
+Install docker and docker-compose. Use the following commands:
+```bash 
+sudo apt-get update && sudo apt-get install -y docker.io docker-compose
+```
+Make sure docker is installed:
+```bash 
+sudo docker --version
+```
+Something like this
+```bash 
+Docker version 24.0.7
+```
+should be printed.
+
+## Setup
+### Folder structure
+### Setup Docker-Compore File
 ### Setup Dockerfiel for python script
 ### Setup HTML-Page
 ### Additional Configurations
 ## Running deployment
 ### Scenario 1
-### Scenario 2
-### Scenario 3
-### Scenario 4
 ## Troubleshooting
 ## References
