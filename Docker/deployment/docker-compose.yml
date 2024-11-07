@@ -31,8 +31,8 @@ services:
       GF_SECURITY_ADMIN_PASSWORD: admin
       GF_AUTH_GENERIC_OAUTH_ENABLED: "true"
       GF_AUTH_GENERIC_OAUTH_NAME: "Keycloak"
-      GF_AUTH_GENERIC_OAUTH_CLIENT_ID: "grafana"  # The client ID from Keycloak
-      GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: "your-client-secret"  # The client secret from Keycloak
+      GF_AUTH_GENERIC_OAUTH_CLIENT_ID: "grafana"  # Client ID from Keycloak
+      GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: "your-client-secret"  # Client Secret from Keycloak
       GF_AUTH_GENERIC_OAUTH_SCOPES: "openid"
       GF_AUTH_GENERIC_OAUTH_AUTH_URL: "http://nuraiym.test/realms/master/protocol/openid-connect/auth"
       GF_AUTH_GENERIC_OAUTH_TOKEN_URL: "http://nuraiym.test/realms/master/protocol/openid-connect/token"
@@ -43,7 +43,10 @@ services:
     networks:
       - backend
     ports:
-      - "3000:3000"  
+      - "3000:3000"
+    volumes:
+      - ./grafana.ini:/etc/grafana/grafana.ini
+
 
   # Python Sensor Data Generator
   python:
