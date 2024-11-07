@@ -1,47 +1,13 @@
 version: '3'
+
 services:
   web:
     build:
       context: ./nginx
     ports:
       - "80:80"
-    depends_on:
-      - pgadmin
-      - oauth2-proxy
     networks:
       - backend
-
-  oauth2-proxy:
-    image: quay.io/oauth2-proxy/oauth2-proxy:v7.1.0
-    container_name: oauth2-proxy
-    environment:
-      OAUTH2_PROXY_PROVIDER: "keycloak"
-      OAUTH2_PROXY_CLIENT_ID: "pgadmin-client-id"  # Set the Keycloak client ID
-      OAUTH2_PROXY_CLIENT_SECRET: "pgadmin-client-secret"  # Set the Keycloak client secret
-      OAUTH2_PROXY_REDIRECT_URL: "http://nuraiym.test/oauth2/callback"
-      OAUTH2_PROXY_COOKIE_SECRET: "random-secret-for-cookie"  # Secure random value for cookie encryption
-      OAUTH2_PROXY_UPSTREAMS: "http://pgadmin:80"
-      OAUTH2_PROXY_EMAIL_DOMAIN: "*"
-      OAUTH2_PROXY_HTTP_ADDRESS: "0.0.0.0:4180"
-    networks:
-      - backend
-    ports:
-      - "4180:4180"
-
-
-  pgadmin:
-    image: dpage/pgadmin4:latest
-    container_name: pgadmin
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@example.com
-      PGADMIN_DEFAULT_PASSWORD: password
-    ports:
-      - "5050:80"  # Expose pgAdmin on port 5050
-    depends_on:
-      - postgres
-    networks:
-      - backend
-
 
   # PostgreSQL Database
   postgres:
@@ -68,9 +34,9 @@ services:
       GF_AUTH_GENERIC_OAUTH_CLIENT_ID: "grafana"  # The client ID from Keycloak
       GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: "your-client-secret"  # The client secret from Keycloak
       GF_AUTH_GENERIC_OAUTH_SCOPES: "openid"
-      GF_AUTH_GENERIC_OAUTH_AUTH_URL: "http://nuraiym.test/realms/<your-realm>/protocol/openid-connect/auth"
-      GF_AUTH_GENERIC_OAUTH_TOKEN_URL: "http://nuraiym.test/realms/<your-realm>/protocol/openid-connect/token"
-      GF_AUTH_GENERIC_OAUTH_API_URL: "http://nuraiym.test/realms/<your-realm>/protocol/openid-connect/userinfo"
+      GF_AUTH_GENERIC_OAUTH_AUTH_URL: "http://nuraiym.test/realms/master/protocol/openid-connect/auth"
+      GF_AUTH_GENERIC_OAUTH_TOKEN_URL: "http://nuraiym.test/realms/master/protocol/openid-connect/token"
+      GF_AUTH_GENERIC_OAUTH_API_URL: "http://nuraiym.test/realms/master/protocol/openid-connect/userinfo"
     depends_on:
       - postgres
       - keycloak
@@ -78,7 +44,6 @@ services:
       - backend
     ports:
       - "3000:3000"  
-
 
   # Python Sensor Data Generator
   python:
