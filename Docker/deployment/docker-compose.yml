@@ -8,8 +8,10 @@ services:
       - "80:80"
     networks:
       - backend
+    depends_on:
+      - grafana
+      - keycloak
 
-  # PostgreSQL Database
   postgres:
     image: postgres:latest
     container_name: postgres
@@ -22,7 +24,6 @@ services:
     networks:
       - backend
 
-  # Grafana Service
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
@@ -31,12 +32,13 @@ services:
       GF_SECURITY_ADMIN_PASSWORD: admin
       GF_AUTH_GENERIC_OAUTH_ENABLED: "true"
       GF_AUTH_GENERIC_OAUTH_NAME: "Keycloak"
-      GF_AUTH_GENERIC_OAUTH_CLIENT_ID: "grafana"  # Client ID from Keycloak
-      GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: "your-client-secret"  # Client Secret from Keycloak
+      GF_AUTH_GENERIC_OAUTH_CLIENT_ID: "grafana"
+      GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: "your-client-secret"
       GF_AUTH_GENERIC_OAUTH_SCOPES: "openid"
-      GF_AUTH_GENERIC_OAUTH_AUTH_URL: "http://nuraiym.test/realms/master/protocol/openid-connect/auth"
-      GF_AUTH_GENERIC_OAUTH_TOKEN_URL: "http://nuraiym.test/realms/master/protocol/openid-connect/token"
-      GF_AUTH_GENERIC_OAUTH_API_URL: "http://nuraiym.test/realms/master/protocol/openid-connect/userinfo"
+      GF_AUTH_GENERIC_OAUTH_AUTH_URL: "http://nuraiym.test:8080/realms/master/protocol/openid-connect/auth"
+      GF_AUTH_GENERIC_OAUTH_TOKEN_URL: "http://nuraiym.test:8080/realms/master/protocol/openid-connect/token"
+      GF_AUTH_GENERIC_OAUTH_API_URL: "http://nuraiym.test:8080/realms/master/protocol/openid-connect/userinfo"
+      GF_SERVER_ROOT_URL: "http://nuraiym.test:3000"
     depends_on:
       - postgres
       - keycloak
@@ -44,11 +46,7 @@ services:
       - backend
     ports:
       - "3000:3000"
-    volumes:
-      - ./grafana.ini:/etc/grafana/grafana.ini
 
-
-  # Python Sensor Data Generator
   python:
     build:
       context: ./python
@@ -63,21 +61,20 @@ services:
     networks:
       - backend
 
-  # Keycloak Authentication Server
   keycloak:
-    image: keycloak/keycloak:latest
+    image: quay.io/keycloak/keycloak:latest
     container_name: keycloak
     environment:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
       KC_BOOTSTRAP_ADMIN_USERNAME: admin
       KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KC_HOSTNAME: "http://nuraiym.test:8080"
     ports:
       - "8080:8080"
     command: start-dev  # Start in dev mode
     networks:
       - backend
-    
 
 networks:
   backend:

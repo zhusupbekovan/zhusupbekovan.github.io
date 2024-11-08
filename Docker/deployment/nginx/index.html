@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My Custom Nginx Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
 </head>
 <body>
-    <h1>Welcome to My Custom Nginx Server!</h1>
-    <p>This is a custom page served by Nginx in a Docker container using Docker Compose.</p>
-
-    <h2>Links to Services</h2>
-    <ul>
-        <li><a href="http://nuraiym.test:3000">Grafana Dashboard</a></li>
-        <li><a href="http://nuraiym.test:8080">Keycloak Admin Console</a></li>
-    </ul>
+    <h1>Welcome to the Dashboard</h1>
+    <p>
+        <a href="http://nuraiym.test:8080">Login with Keycloak</a>
+    </p>
+    <p>
+        <a href="http://nuraiym.test:3000/">Access Grafana (SSO)</a>
+    </p>
 </body>
 </html>

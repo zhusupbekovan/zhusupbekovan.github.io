@@ -38,8 +38,8 @@ Note: do not run the result of this assignment in a production environment witho
 - [Setup](#setup)
     - [Folder structure](#folder-structure)
     - [Setup Docker-Compore File](#setup-docker-compore-file)
-    - [Setup Dockerfiel for python script](#setup-dockerfiel-for-python-script)
-    - [Setup HTML-Page](#setup-html-page)
+    - [Setup python](#setup-python)
+    - [Setup Nginx](#setup-nginx)
     - [Additional Configurations](#additional-configurations)
 - [Running deployment](#running-deployment)
     - [Scenario 1](#scenario-1)
@@ -69,10 +69,25 @@ Docker version 24.0.7
 should be printed.
 
 ## Setup
+This section explains step by step for what is each file/folder.
 ### Folder structure
+The following is the folder structure of the deployment:
+```bash
+.
+├── docker-compose.yml
+├── grafana.ini
+├── nginx
+│   ├── Dockerfile
+│   └── index.html
+└── python
+    ├── Dockerfile
+    └── sensor_data_generator.py
+```   
+Later, make sure you are running docker-compose in this derectory.
+
 ### Setup Docker-Compore File
-### Setup Dockerfiel for python script
-### Setup HTML-Page
+### Setup python
+### Setup Nginx
 ### Additional Configurations
 ## Running deployment
 ### Scenario 1
