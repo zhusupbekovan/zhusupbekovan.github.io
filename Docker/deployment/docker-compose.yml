@@ -33,11 +33,11 @@ services:
       GF_AUTH_GENERIC_OAUTH_ENABLED: "true"
       GF_AUTH_GENERIC_OAUTH_NAME: "Keycloak"
       GF_AUTH_GENERIC_OAUTH_CLIENT_ID: "grafana"
-      GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: "your-client-secret"
+      GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: "rwHBMgDA962GuL4XQy9pYPzQZ7xTFPuB"
       GF_AUTH_GENERIC_OAUTH_SCOPES: "openid"
-      GF_AUTH_GENERIC_OAUTH_AUTH_URL: "http://nuraiym.test:8080/realms/master/protocol/openid-connect/auth"
-      GF_AUTH_GENERIC_OAUTH_TOKEN_URL: "http://nuraiym.test:8080/realms/master/protocol/openid-connect/token"
-      GF_AUTH_GENERIC_OAUTH_API_URL: "http://nuraiym.test:8080/realms/master/protocol/openid-connect/userinfo"
+      GF_AUTH_GENERIC_OAUTH_AUTH_URL: "http://keycloak:8080/realms/master/protocol/openid-connect/auth"
+      GF_AUTH_GENERIC_OAUTH_TOKEN_URL: "http://keycloak:8080/realms/master/protocol/openid-connect/token"
+      GF_AUTH_GENERIC_OAUTH_API_URL: "http://keycloak:8080/realms/master/protocol/openid-connect/userinfo"
       GF_SERVER_ROOT_URL: "http://nuraiym.test:3000"
     depends_on:
       - postgres
@@ -46,6 +46,8 @@ services:
       - backend
     ports:
       - "3000:3000"
+    volumes:
+      - ./grafana.ini:/etc/grafana/grafana.ini  # Mount your custom grafana.ini
 
   python:
     build:
