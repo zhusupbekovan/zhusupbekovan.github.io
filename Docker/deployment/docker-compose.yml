@@ -20,7 +20,7 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: sensor_data
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data      # Persistent volume for PostgreSQL data
     networks:
       - backend
 
@@ -30,29 +30,39 @@ services:
     environment:
       GF_SECURITY_ADMIN_USER: admin
       GF_SECURITY_ADMIN_PASSWORD: admin
-      # Remove Keycloak configuration
+      # Disable OAuth configuration
       GF_AUTH_GENERIC_OAUTH_ENABLED: "false"
       GF_SERVER_ROOT_URL: "http://nuraiym.test:3000"
+      GF_DATASOURCE_NAME: 'postgres'                # Data source name
+      GF_DATASOURCE_TYPE: 'postgres'                # Type of data source
+      GF_DATASOURCE_URL: 'http://postgres:5432'     # PostgreSQL container URL (using service name 'postgres')
+      GF_DATASOURCE_ACCESS: 'proxy'                 # Use proxy mode to access DB
+      GF_DATASOURCE_IS_DEFAULT: 'true'              # Make it the default data source
+      GF_DATASOURCE_USER: 'user'                   # PostgreSQL username
+      GF_DATASOURCE_PASSWORD: 'password'           # PostgreSQL password
     depends_on:
       - postgres
     networks:
       - backend
     ports:
       - "3000:3000"
-
+    volumes:
+      - grafana_data:/var/lib/grafana               # Persistent volume for Grafana data (including data sources)
 
   pgadmin:
     image: dpage/pgadmin4:latest
     container_name: pgadmin
     environment:
-      PGADMIN_DEFAULT_EMAIL:  admin@example.com  # Replace with your email
-      PGADMIN_DEFAULT_PASSWORD: admin           # Replace with your password
+      PGADMIN_DEFAULT_EMAIL: admin@example.com     # Replace with your email
+      PGADMIN_DEFAULT_PASSWORD: admin              # Replace with your password
     ports:
       - "5050:80"
     networks:
       - backend
     depends_on:
       - postgres
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin              # Persistent volume for pgAdmin data
 
   python:
     build:
@@ -73,4 +83,9 @@ networks:
     driver: bridge
 
 volumes:
-  postgres_data:
+  postgres_data:                                    # Persistent volume for PostgreSQL data
+    driver: local
+  grafana_data:                                     # Persistent volume for Grafana data
+    driver: local
+  pgadmin_data:                                     # Persistent volume for pgAdmin data
+    driver: local
