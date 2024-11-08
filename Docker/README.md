@@ -184,11 +184,11 @@ Three volumes are defined (*postgres_data*, *grafana_data*, *pgadmin_data*) to s
         - Python (A containerized Python script for generating data for PostgreSQL database)
 2. Access the Services
     - **Nginx Web Service (Main Page)**: Open browser and go to http://localhost. This should load the index page served by Nginx. Webpage should also contain links to *pgAdmin* and *grafana*. 
-    <img src="./img/main.png"style="display:block;margin: auto;float:left;" />
+    <img src="./img/main.png" style="display:block;margin: auto;float:left;" />
     - **pgAdmin**: You can access pgAdmin at http://localhost:5050. Log in using the credentials specified in the docker-compose.yml:
         - Email: admin@example.com
         - Password: admin
-        <img src="./img/pgadmin.png"style="display:block;margin: auto;float:left;" />    
+        <img src="./img/pgadmin.png" style="display:block;margin: auto;float:left;" />    
     - **Grafana:** Open browser and navigate to http://localhost:3000. You can log in using the default credentials:
         - Username: admin
         - Password: admin
@@ -204,7 +204,7 @@ Three volumes are defined (*postgres_data*, *grafana_data*, *pgadmin_data*) to s
             - **User**: `user`
             - **Password**: `password`
         5. Click **Save & Test** to verify the connection.
-        <img src="./img/grafana_connection.png"style="display:block;margin: auto;float:left;" /> 
+        <img src="./img/grafana_connection.png" style="display:block;margin: auto;float:left;" /> 
     - Create a Dashboard
 
         1. Click on the **plus icon (+)** on the left menu, and select **Dashboard**.
