@@ -8,7 +8,7 @@ WORKDIR /app
 RUN pip install psycopg2-binary
 
 # Copy script to container
-COPY my_data_generator.py /app/
+COPY data_generator.py /app/
 
 # Run the script
 CMD ["python", "data_generator.py"]
