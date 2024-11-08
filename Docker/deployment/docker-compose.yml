@@ -18,7 +18,7 @@ services:
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: sensor_data
+      POSTGRES_DB: my_data
     volumes:
       - postgres_data:/var/lib/postgresql/data      # Persistent volume for PostgreSQL data
     networks:
@@ -30,9 +30,8 @@ services:
     environment:
       GF_SECURITY_ADMIN_USER: admin
       GF_SECURITY_ADMIN_PASSWORD: admin
-      # Disable OAuth configuration
       GF_AUTH_GENERIC_OAUTH_ENABLED: "false"
-      GF_SERVER_ROOT_URL: "http://nuraiym.test:3000"
+      GF_SERVER_ROOT_URL: "http://localhost:3000"
       GF_DATASOURCE_NAME: 'postgres'                # Data source name
       GF_DATASOURCE_TYPE: 'postgres'                # Type of data source
       GF_DATASOURCE_URL: 'http://postgres:5432'     # PostgreSQL container URL (using service name 'postgres')
@@ -70,7 +69,7 @@ services:
     container_name: data_generator
     environment:
       DB_HOST: postgres
-      DB_NAME: sensor_data
+      DB_NAME: my_data
       DB_USER: user
       DB_PASSWORD: password
     depends_on:
@@ -83,9 +82,6 @@ networks:
     driver: bridge
 
 volumes:
-  postgres_data:                                    # Persistent volume for PostgreSQL data
-    driver: local
-  grafana_data:                                     # Persistent volume for Grafana data
-    driver: local
-  pgadmin_data:                                     # Persistent volume for pgAdmin data
-    driver: local
+  postgres_data:                                   
+  grafana_data:                                     
+  pgadmin_data:                                    
