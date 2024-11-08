@@ -19,7 +19,6 @@
 
     - [Additional Configurations](#additional-configurations)
 - [Running deployment](#running-deployment)
-    - [Scenario 1](#scenario-1)
 - [Troubleshooting](#troubleshooting)
 - [References](#references)
 
