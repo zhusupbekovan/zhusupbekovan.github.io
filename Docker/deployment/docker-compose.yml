@@ -10,7 +10,7 @@ services:
       - backend
     depends_on:
       - grafana
-      - keycloak
+      - pgadmin
 
   postgres:
     image: postgres:latest
@@ -30,24 +30,29 @@ services:
     environment:
       GF_SECURITY_ADMIN_USER: admin
       GF_SECURITY_ADMIN_PASSWORD: admin
-      GF_AUTH_GENERIC_OAUTH_ENABLED: "true"
-      GF_AUTH_GENERIC_OAUTH_NAME: "Keycloak"
-      GF_AUTH_GENERIC_OAUTH_CLIENT_ID: "grafana"
-      GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: "rwHBMgDA962GuL4XQy9pYPzQZ7xTFPuB"
-      GF_AUTH_GENERIC_OAUTH_SCOPES: "openid"
-      GF_AUTH_GENERIC_OAUTH_AUTH_URL: "http://keycloak:8080/realms/master/protocol/openid-connect/auth"
-      GF_AUTH_GENERIC_OAUTH_TOKEN_URL: "http://keycloak:8080/realms/master/protocol/openid-connect/token"
-      GF_AUTH_GENERIC_OAUTH_API_URL: "http://keycloak:8080/realms/master/protocol/openid-connect/userinfo"
+      # Remove Keycloak configuration
+      GF_AUTH_GENERIC_OAUTH_ENABLED: "false"
       GF_SERVER_ROOT_URL: "http://nuraiym.test:3000"
     depends_on:
       - postgres
-      - keycloak
     networks:
       - backend
     ports:
       - "3000:3000"
-    volumes:
-      - ./grafana.ini:/etc/grafana/grafana.ini  # Mount your custom grafana.ini
+
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL:  admin@example.com  # Replace with your email
+      PGADMIN_DEFAULT_PASSWORD: admin           # Replace with your password
+    ports:
+      - "5050:80"
+    networks:
+      - backend
+    depends_on:
+      - postgres
 
   python:
     build:
@@ -60,21 +65,6 @@ services:
       DB_PASSWORD: password
     depends_on:
       - postgres
-    networks:
-      - backend
-
-  keycloak:
-    image: quay.io/keycloak/keycloak:latest
-    container_name: keycloak
-    environment:
-      KEYCLOAK_USER: admin
-      KEYCLOAK_PASSWORD: admin
-      KC_BOOTSTRAP_ADMIN_USERNAME: admin
-      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
-      KC_HOSTNAME: "http://nuraiym.test:8080"
-    ports:
-      - "8080:8080"
-    command: start-dev  # Start in dev mode
     networks:
       - backend
 

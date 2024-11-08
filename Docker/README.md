@@ -1,4 +1,4 @@
-# Docker installationS
+# Docker installation
 
 ## Assignment Instructions
 The assignment for this module is to set up an application using Docker and Docker Compose and document the process and any files used or created along the way (such as a docker-compose.yml or Dockerfile - if applicable). In other words, a fellow student of this course should be able to loosely follow your instructions to install the application themselves. After completing this assignment, post your documentation to you GitHub Pages website. Do not delete your Arch Assignment documentation. You may create an additional page or an index page to link to your projects if desired.
@@ -69,13 +69,12 @@ Docker version 24.0.7
 should be printed.
 
 ## Setup
-This section explains step by step for what is each file/folder.
+This section explains step by step for what is each file or folder in the directory *deploymnet*.
 ### Folder structure
 The following is the folder structure of the deployment:
 ```bash
 .
 ├── docker-compose.yml
-├── grafana.ini
 ├── nginx
 │   ├── Dockerfile
 │   └── index.html
