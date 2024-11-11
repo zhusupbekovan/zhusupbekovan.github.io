@@ -110,7 +110,10 @@ The following is the folder structure of the deployment:
 ├── docker-compose.yml
 ├── nginx
 │   ├── Dockerfile
-│   └── index.html
+│   ├── index.html
+│   └── resources
+│       └── img
+│           └── dashboard.png
 └── python
     ├── Dockerfile
     └── data_generator.py
