@@ -5,8 +5,6 @@
 - [Table of Contents](#table-of-contents)
 - [System Prerequisites](#system-prerequisites)
 - [Deployment description](#deployment-description)
-    - [Functional requirenments](#functional-requirenments)
-    - [Additional features](#additional-features)
 - [Installing docker and docker-compose](#installing-docker-and-docker-compose)
 - [Setup](#setup)
     - [Folder structure](#folder-structure)
