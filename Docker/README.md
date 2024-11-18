@@ -5,8 +5,6 @@
 - [Table of Contents](#table-of-contents)
 - [System Prerequisites](#system-prerequisites)
 - [Deployment description](#deployment-description)
-    - [Functional requirenments](#functional-requirenments)
-    - [Additional features](#additional-features)
 - [Installing docker and docker-compose](#installing-docker-and-docker-compose)
 - [Setup](#setup)
     - [Folder structure](#folder-structure)
@@ -19,7 +17,6 @@
 
     - [Additional Configurations](#additional-configurations)
 - [Running deployment](#running-deployment)
-    - [Scenario 1](#scenario-1)
 - [Troubleshooting](#troubleshooting)
 - [References](#references)
 
@@ -113,7 +110,10 @@ The following is the folder structure of the deployment:
 ├── docker-compose.yml
 ├── nginx
 │   ├── Dockerfile
-│   └── index.html
+│   ├── index.html
+│   └── resources
+│       └── img
+│           └── dashboard.png
 └── python
     ├── Dockerfile
     └── data_generator.py
