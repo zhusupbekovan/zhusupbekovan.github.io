@@ -198,7 +198,6 @@ docker-compose logs -f wireguard
     - After connecting to the VPN - Visit [IPLeak.net](https://ipleak.net/)again or run curl ifconfig.me to confirm that your IP has changed to the VPN server’s IP address.
     <img src="./img/laptop2.png" style="display:block;margin: auto;float:left;" /> 
 
-    
+
 ## References
 - [Setup Wireguard VPN server with Docker](https://thematrix.dev/setup-wireguard-vpn-server-with-docker/)
-- [ChatGPT](https://chatgpt.com/)
