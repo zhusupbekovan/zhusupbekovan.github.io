@@ -17,8 +17,8 @@
 - [References](#references)
 
 ## Installation Process
-1. Sign up for a **new** account using this URL [https://m.do.co/c/d33d59113ab6](#https://m.do.co/c/d33d59113ab6)
-• Gets you $200 credit for 2 months of usage
+- Sign up for a **new** account using this URL [https://m.do.co/c/d33d59113ab6](#https://m.do.co/c/d33d59113ab6)
+- Gets you $200 credit for 2 months of usage
 ### Create an Ubuntu 22.04
 1. 2nd Cheapest Droplet = $6/mont
     - Ubuntu 22.04
