@@ -7,7 +7,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Etc/UTC
-      - SERVERURL=1.2.3.4
+      - SERVERURL=localhost
       - SERVERPORT=51820
       - PEERS=pc1,pc2,phone1
       - PEERDNS=auto

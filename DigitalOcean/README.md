@@ -1,4 +1,4 @@
-# Docker installation
+# Wireguard Setup with Docker-compose and Digital Ocean
 
 ## Table of Contents
 - [Assignment Instructions](#assignment-instructions)
@@ -129,11 +129,76 @@ cd ~/wireguard/
 docker-compose up -d
 ```
 Brings up the container in detached mode (-d).
+Check logs to get the QR code: 
+```bash
+docker-compose logs -f wireguard
+```
 ### Configure and test VPN access on
 - Mobile device: Import the peer configuration and test connectivity.
 - Laptop: Set up the VPN connection and verify proper routing.
 #### Mobile device
-#### Laptop
+1.	Open the Wireguard app and scan the QR code from the logs. 
+2.	Before connecting: 
+    - Visit [IPLeak.net](https://ipleak.net/) and screenshot your local IP. The following screenshot shows the IP-Address:
+    <img src="./img/mobile1.png" style="display:block;margin: auto;float:left;" /> 
+3.	After connecting: 
+    - Turn on the Wireguard VPN and revisit [IPLeak.net](https://ipleak.net/)
+    - Screenshot of the VPN IP is shown below: 
+    <img src="./img/mobile2.png" style="display:block;margin: auto;float:left;" /> 
+
+#### Laptop 
+1. Setting Up the WireGuard Client for Ubuntu
+    ```bash 
+    sudo apt update
+    sudo apt install wireguard
+    ```
+2. Locate the WireGuard Configuration File
+    
+    To find the configuration file:
+    ```bash
+    ls /opt/wireguard/config
+    ```
+3. Copy the Configuration File to Your Client
+    ```bash
+    scp root@[ip-address]:/opt/wireguard/config/peer_pc1.conf ~/peer_pc1.conf
+    ```
+    or put the following content in ```~/peer_pc1.conf```
+    ```bash
+    [Interface]
+    PrivateKey = iLwC8xbCzwVd5j9s7Et/72d6keAAVTlkmxcY/wX6Ako=
+    ListenPort = 52820
+    Address = 10.0.0.2/32
+    DNS = 10.0.0.1
+
+    [Peer]
+    PublicKey = P5GnsQQZk4X0KilGkKNg5ND/XZjV0KP7QDNuShSCcG4=
+    PresharedKey = 5X6AWptfcPEHqhgi3nVlEb6vx833rLQic/ofI4TMy5s=
+    AllowedIPs = 0.0.0.0/0, ::/0
+    Endpoint = 45.55.41.235:52820
+    ```
+4.  Import the Configuration File into WireGuard
+
+    Use the WireGuard CLI:
+
+    ```bash 
+    sudo wg-quick up ~/wireguard-client.conf
+    ```
+    To bring the interface down, use:
+    ```bash 
+    sudo wg-quick down ~/wireguard-client.conf
+    ```
+5. Verify the VPN Connection
+    Check WireGuard status-  to verify that the VPN interface is up and running, use the following command:
+    ```bash 
+    sudo wg
+    ```
+6. Check IP address
+    - Before connecting to the VPN - Go to [IPLeak.net](https://ipleak.net/) or run curl ifconfig.me in the terminal to see your current public IP.
+    <img src="./img/laptop1.png" style="display:block;margin: auto;float:left;" /> 
+    - After connecting to the VPN - Visit [IPLeak.net](https://ipleak.net/)again or run curl ifconfig.me to confirm that your IP has changed to the VPN server’s IP address.
+    <img src="./img/laptop2.png" style="display:block;margin: auto;float:left;" /> 
+
+    
 ## References
 - [Setup Wireguard VPN server with Docker](https://thematrix.dev/setup-wireguard-vpn-server-with-docker/)
 - [ChatGPT](https://chatgpt.com/)
